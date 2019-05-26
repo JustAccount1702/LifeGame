@@ -5,7 +5,7 @@ import java.awt.*;
 public class ButtonGrid extends JPanel{
     public LifeEngine lifeEngine;
     public JButton[][] grid;
-    public int N = 50;
+    static final int N = 50;
     public Point viewField;
     public ButtonGrid(){
 

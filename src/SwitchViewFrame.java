@@ -6,7 +6,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class SwitchViewFrame extends JFrame {
-    SwitchViewFrame (LifePainter lp) {
+    SwitchViewFrame (MainMenu mainMenu) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int sizeWidth = 360;
         int sizeHeight = 400;
@@ -14,7 +14,7 @@ public class SwitchViewFrame extends JFrame {
         int locationY = (screenSize.height - sizeHeight) / 2;
         setBounds(locationX, locationY, sizeWidth, sizeHeight);
 
-        setTitle("Морской бой");
+        setTitle("Set view point");
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
@@ -31,14 +31,18 @@ public class SwitchViewFrame extends JFrame {
         xCoord.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                lp.buttonGrid.viewField = new Point(Integer.parseInt(xCoord.getText()), lp.buttonGrid.viewField.y);
+                mainMenu.buttonGrid.viewField = new Point(Integer.parseInt(xCoord.getText()), mainMenu.buttonGrid.viewField.y);
+                mainMenu.refreshGrid();
+                dispose();
             }
         });
 
         yCoord.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                lp.buttonGrid.viewField = new Point(lp.buttonGrid.viewField.x, Integer.parseInt(yCoord.getText()));
+                mainMenu.buttonGrid.viewField = new Point(mainMenu.buttonGrid.viewField.x, Integer.parseInt(yCoord.getText()));
+                mainMenu.refreshGrid();
+                dispose();
             }
         });
 
@@ -46,7 +50,11 @@ public class SwitchViewFrame extends JFrame {
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                lp.refreshGrid();
+                if (!xCoord.getText().isEmpty() && !yCoord.getText().isEmpty() &&
+                        Integer.parseInt(yCoord.getText()) >= 0 && Integer.parseInt(xCoord.getText()) >= 0 &&
+                        Integer.parseInt(yCoord.getText()) < LifeEngine.fieldSizeY - ButtonGrid.N && Integer.parseInt(xCoord.getText()) < LifeEngine.fieldSizeX - ButtonGrid.N )
+                            mainMenu.buttonGrid.viewField = new Point(Integer.parseInt(xCoord.getText()), Integer.parseInt(yCoord.getText()));
+                mainMenu.refreshGrid();
                 dispose();
             }
         });
