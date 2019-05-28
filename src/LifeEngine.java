@@ -3,15 +3,15 @@ public class LifeEngine {
     static final int fieldSizeX = 144;// Создаем поле размером 144x146 = 20820
     static final int fieldSizeY = 146;
 
-    LifeEngine(){
+    LifeEngine(){// Конструктор по умолчанию
         field = new boolean[fieldSizeX][fieldSizeY];
         for (int i = 0; i < fieldSizeX ; i++)
             for (int j = 0; j < fieldSizeY ; j++)
-                field[i][j] = false;
+                field[i][j] = false;// Заполянем все клетки пустыми элементами
     }
 
 
-    private boolean get_new(int x, int y){
+    private boolean get_new(int x, int y){// Метод, определяющий состояние клетки на следующем ходу
         int count = 0;
         // Ищем "живые" клетки вогруг данной
         if (field[x][y - 1])
@@ -35,11 +35,11 @@ public class LifeEngine {
     }
 
 
-    public void update(){
-        boolean[][] nf = new boolean[fieldSizeX][fieldSizeY];
+    public void update(){// Метод обновления позиций клеток
+        boolean[][] nf = new boolean[fieldSizeX][fieldSizeY];// Создание нового поля
         for (int i = 1; i < fieldSizeX - 1; i++)
             for (int j = 1; j < fieldSizeY - 1; j++)
-                nf[i][j] = get_new(i, j);
-        this.field = nf;
+                nf[i][j] = get_new(i, j);// Заполнение поля обновлёнными элементами
+        this.field = nf;// Присвоение нового поля
     }
 }

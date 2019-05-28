@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class SwitchViewFrame extends JFrame {
-    SwitchViewFrame (MainMenu mainMenu) {
+public class SwitchViewFrame extends JFrame {// Меню переключения области обзора
+    SwitchViewFrame (MainMenu mainMenu) {// Настройка основных параметров
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int sizeWidth = 360;
         int sizeHeight = 400;
@@ -23,11 +23,13 @@ public class SwitchViewFrame extends JFrame {
         });
         setLayout(null);
 
+        // Создание двух текстовых полей для ввода новых координат
         JTextField xCoord = new JTextField(20);
         xCoord.setToolTipText("X cell");
         JTextField yCoord = new JTextField(20);
         yCoord.setToolTipText("Y cell");
 
+        // Обработка ввода новых значений
         xCoord.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -46,6 +48,7 @@ public class SwitchViewFrame extends JFrame {
             }
         });
 
+        // Обработка нажатия кнопки Update
         JButton updateButton = new JButton("Update");
         updateButton.addActionListener(new ActionListener() {
             @Override
@@ -61,6 +64,7 @@ public class SwitchViewFrame extends JFrame {
 
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
+        // Добавление всех элементов на интерактивную панель окна
         panel.add(xCoord);
         panel.add(yCoord);
         panel.add(updateButton);

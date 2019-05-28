@@ -11,10 +11,11 @@ public class MainMenu extends JFrame{
     public boolean isRunning;
 
     public MainMenu(){
-        super("Life game");
+        super("Life game");// Создание окна с заголовком Life Game
         isRunning = false;
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);// Установка действия при нажатии креста
+        // Расстановка основных элементов управления программой
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
 
@@ -25,13 +26,15 @@ public class MainMenu extends JFrame{
         mainPanel.add(buttonGrid);
         getContentPane().add(mainPanel);
 
-        updateExecutor = Executors.newSingleThreadScheduledExecutor();
+        updateExecutor = Executors.newSingleThreadScheduledExecutor();// Добавление многопоточного обработчика событий/обновления экрана
 
         oneIteration = () -> {
             buttonGrid.lifeEngine.update();
             refreshGrid();
         };
+        // Обозначение всех кнопок и их действий по умолчанию
 
+        // Кнопка начала обновления экрана
         JButton start = new JButton("Start");
         start.setBackground(Color.darkGray);
         start.setForeground(Color.green);
@@ -40,11 +43,13 @@ public class MainMenu extends JFrame{
             if (!isRunning) {
                 isRunning = true;
                 updateExecutor = Executors.newSingleThreadScheduledExecutor();
+                // Запуск многогопоточного обработчика событий с задержкой в 500 мс
                 updateExecutor.scheduleAtFixedRate(oneIteration, 0, 500, TimeUnit.MILLISECONDS);
             }
         });
         buttonsPanel.add(start);
 
+        // Кнопка остановки процесса обновления
         JButton stop = new JButton("Stop");
         stop.setBackground(Color.darkGray);
         stop.setForeground(Color.red);
@@ -55,6 +60,7 @@ public class MainMenu extends JFrame{
         });
         buttonsPanel.add(stop);
 
+        // Кнопка сброса состояния поля
         JButton reset = new JButton("Reset");
         reset.setBackground(Color.darkGray);
         reset.setForeground(Color.WHITE);
@@ -65,6 +71,7 @@ public class MainMenu extends JFrame{
         });
         buttonsPanel.add(reset);
 
+        // Кнопка премещения области просмотра
         JButton view = new JButton("View");
         view.setBackground(Color.darkGray);
         view.setForeground(Color.WHITE);
@@ -74,6 +81,7 @@ public class MainMenu extends JFrame{
         });
         buttonsPanel.add(view);
 
+        // Кнопка загрузки поля из копии на диске
         JButton load = new JButton("Load");
         load.setBackground(Color.darkGray);
         load.setForeground(Color.yellow);
@@ -81,6 +89,7 @@ public class MainMenu extends JFrame{
         load.addActionListener(e -> load());
         buttonsPanel.add(load);
 
+        // Кнопка выгрузки поля из файла на диске
         JButton save = new JButton("Save");
         save.setBackground(Color.darkGray);
         save.setForeground(Color.yellow);
@@ -88,12 +97,12 @@ public class MainMenu extends JFrame{
         save.addActionListener(e -> save());
         buttonsPanel.add(save);
 
-        refreshGrid();
-        mainPanel.add(buttonsPanel, BorderLayout.NORTH);
+        refreshGrid();// Обновление сетки кнопок
+        mainPanel.add(buttonsPanel, BorderLayout.NORTH);// Добавление всех кнопок на экран
     }
 
 
-    public void refreshGrid(){
+    public void refreshGrid(){// Метод обновления цветов клеток
         for (int i = 0; i < buttonGrid.N; i++){
             for (int j = 0; j < buttonGrid.N; j++){
 
@@ -103,7 +112,7 @@ public class MainMenu extends JFrame{
     }
 
 
-    public void resetGrid(){
+    public void resetGrid(){// Метод очистки поля
         updateExecutor.shutdown();
         for (int i = 0; i < buttonGrid.N; i++){
             for (int j = 0; j < buttonGrid.N; j++){
@@ -114,7 +123,7 @@ public class MainMenu extends JFrame{
     }
 
 
-    public void save(){
+    public void save(){// Метод сохранения поля на диск
         try {
             FileOutputStream fos = new FileOutputStream("src/field");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -127,7 +136,7 @@ public class MainMenu extends JFrame{
     }
 
 
-    public void load(){
+    public void load(){// Метод загрузки поля с диска
         try {
             FileInputStream fis = new FileInputStream("src/field");
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -140,8 +149,8 @@ public class MainMenu extends JFrame{
     }
 
 
-    public static void main(String[] args){
-        JFrame frame = new MainMenu();
+    public static void main(String[] args){// Точка входа в программу
+        JFrame frame = new MainMenu();// Создание основоного окна и последующая его настройка
         frame.setPreferredSize(new Dimension(1000, 1000));
         frame.pack();
         frame.setLocationRelativeTo(null);
